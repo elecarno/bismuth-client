@@ -1,0 +1,60 @@
+{
+    "iron_ore": {
+        "type": "resource",
+        "stacksize": 999,
+        "description": "ore that can be smelted into iron bars in a blast furnace"
+    },
+    "iron_pickaxe": {
+        "type": "tool",
+        "stacksize": 1,
+        "description": "I wonder where this idea came from",
+        "strength": 10
+    },
+    "rock_wall": {
+        "type": "wall",
+        "stacksize": 999,
+        "description": "a chunk of pure rock from the Temperate Cave biome",
+        "tileid": 0
+    },
+    "granite_wall": {
+        "type": "wall",
+        "stacksize": 999,
+        "description": "a chunk of pure granite, found in many biomes",
+        "tileid": 1
+    },
+    "red_shroom": {
+        "type": "prop",
+        "stacksize": 999,
+        "description": "red mushroom",
+        "tileid": 0
+    },
+    "yellow_shroom": {
+        "type": "prop",
+        "stacksize": 999,
+        "description": "yellow mushroom",
+        "tileid": 1
+    },
+    "stalagmite": {
+        "type": "prop",
+        "stacksize": 999,
+        "description": "rock spire that grows from the ground. Found in Volcanic and Temperate Caves",
+        "tileid": 2
+    },
+    "cave_grass": {
+        "type": "prop",
+        "stacksize": 999,
+        "description": "a common plant found in Rich Caves made from strong fibres",
+        "tileid": 3
+    },
+    "glow_bell": {
+        "type": "prop",
+        "stacksize": 999,
+        "description": "an alluring relative of the Blue Bell that glows faintly when held to UV light",
+        "tileid": 4
+    },
+    "torch": {
+        "type": "object",
+        "stacksize": 999,
+        "description": "burning fuel on a stick to light the way!"
+    }
+}

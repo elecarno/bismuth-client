@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://tilemap/wall_tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://tilemap/floor_tileset.tres" type="TileSet" id=3]
+[ext_resource path="res://world_map.gd" type="Script" id=4]
+[ext_resource path="res://bg.png" type="Texture" id=5]
+[ext_resource path="res://tilemap/prop_tileset.tres" type="TileSet" id=6]
+
+[node name="world" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="bg" type="Sprite" parent="."]
+position = Vector2( -17559, -15999 )
+scale = Vector2( 24.439, 20.1201 )
+texture = ExtResource( 5 )
+offset = Vector2( 1000, 1000 )
+
+[node name="floor_tiles" type="TileMap" parent="."]
+tile_set = ExtResource( 3 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 131072, 14, 0, 131073, 14, 0, 131074, 14, 0, 131075, 14, 0, 131076, 14, 0, 131077, 14, 0, 196610, 14, 0, 196611, 14, 0 )
+
+[node name="1024" type="Camera2D" parent="."]
+position = Vector2( 8192, 8192 )
+zoom = Vector2( 16, 16 )
+smoothing_enabled = true
+smoothing_speed = 25.0
+
+[node name="512" type="Camera2D" parent="."]
+position = Vector2( 4096, 4096 )
+current = true
+zoom = Vector2( 10, 10 )
+smoothing_enabled = true
+smoothing_speed = 25.0
+
+[node name="y_sort" type="YSort" parent="."]
+
+[node name="prop_tiles" type="TileMap" parent="y_sort"]
+tile_set = ExtResource( 6 )
+cell_size = Vector2( 16, 16 )
+cell_y_sort = true
+format = 1
+
+[node name="wall_tiles" type="TileMap" parent="y_sort"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 16 )
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( -458745, 11, 458757, -262137, 11, 2, -196601, 11, 65538, -131065, 11, 65538, -65529, 11, 65538, 7, 11, 65538, 65543, 11, 65539, 131079, 11, 131074 )
+
+[node name="canvas_modulate" type="CanvasModulate" parent="."]
+visible = false
+color = Color( 0.32, 0.32, 0.32, 1 )
