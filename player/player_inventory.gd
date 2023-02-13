@@ -44,13 +44,6 @@ func add_item(item_name, item_quantity):
 			update_slot_visual(i, inventory[i][0], inventory[i][1])
 			return
 
-func update_slot_visual(slot_index, item_name, new_quantity):
-	var slot = get_tree().root.get_node("/root/world/ui/inventory/inv/slot_" + str(slot_index + 1))
-	if slot.item != null:
-		slot.item.set_item(item_name, new_quantity)
-	else:
-		slot.initialise_item(item_name, new_quantity)
-
 func remove_item(slot: slot_class, is_hotbar: bool = false):
 	if is_hotbar:
 		hotbar.erase(slot.slot_index)
@@ -58,6 +51,13 @@ func remove_item(slot: slot_class, is_hotbar: bool = false):
 		print(hotbar)
 	else:
 		inventory.erase(slot.slot_index)
+
+func update_slot_visual(slot_index, item_name, new_quantity):
+	var slot = get_tree().root.get_node("/root/world/ui/inventory/inv/slot_" + str(slot_index + 1))
+	if slot.item != null:
+		slot.item.set_item(item_name, new_quantity)
+	else:
+		slot.initialise_item(item_name, new_quantity)
 
 func add_item_to_empty_slot(item: item_class, slot: slot_class, is_hotbar: bool = false):
 	if is_hotbar:

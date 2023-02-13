@@ -1,0 +1,37 @@
+{
+    "floortiles": {"water": 0, "mud": 1, "volcanic": 2, "sand": 3, "rich": 4, "bismuth": 5, "temperate": 6, "coal": 7, "metallic": 8, "gold": 9, "icy": 10, "radioactive": 11, "mineral": 12, "crystal": 13},
+    "walltiles": {"air": -1, "rock": 0, "granite": 1, "iron_ore": 2},
+    "proptiles": {"red_shroom": 0, "yellow_shroom": 1, "stalagmite": 2, "cave_grass": 3, "glow_bell": 4},
+    "biome_wall_data": {
+        "water": ["air"],
+        "mud": ["air"],
+        "volcanic": ["air"],
+        "sandy": ["air"],
+        "temperate": ["rock", "granite", "iron_ore"],
+        "icy": ["air"],
+        "rich": ["air"],
+        "bismuth": ["air"],
+        "crystal": ["air"],
+        "coal": ["air"],
+        "metallic": ["air"],
+        "gold": ["air"],
+        "radioactive": ["air"],
+        "mineral": ["air"]
+    },
+    "biome_prop_data": {
+        "water": {},
+        "mud": {},
+        "volcanic": {"stalagmite": 0.05},
+        "sandy": {},
+        "temperate": {"stalagmite": 0.05},
+        "icy": {},
+        "rich": {"red_shroom": 0.025, "yellow_shroom": 0.015, "cave_grass": 0.03, "glow_bell": 0.022},
+        "bismuth": {},
+        "crystal": {},
+        "coal": {},
+        "metallic": {},
+        "gold": {},
+        "radioactive": {},
+        "mineral": {}
+    }
+}

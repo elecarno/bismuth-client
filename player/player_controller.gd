@@ -4,10 +4,11 @@ var max_speed = 100
 var acceleration = 500
 var motion = Vector2.ZERO
 
-onready var sprite = get_node("sprite")
 onready var highlight = get_parent().get_parent().get_node("highlight")
 onready var highlight_wall = get_parent().get_parent().get_node("highlight_wall")
 onready var y_sort = get_parent()
+onready var anim = get_node("anim")
+onready var sprite = get_node("sprite")
 
 const slot_class = preload("res://inventory/slot.gd")
 onready var item_drop_obj = preload("res://inventory/item_drop.tscn")
@@ -31,6 +32,30 @@ func _physics_process(delta):
 	if position.y < 276:
 		position.y = 278
 		return
+		
+	if Input.is_action_pressed("down"):
+		anim.play("walk_down")
+	if Input.is_action_just_released("down"):
+		anim.stop()
+		sprite.frame = 2
+		
+	if Input.is_action_pressed("up"):
+		anim.play("walk_up")
+	if Input.is_action_just_released("up"):
+		anim.stop()
+		sprite.frame = 4
+		
+	if Input.is_action_pressed("left"):
+		anim.play("walk_left")
+	if Input.is_action_just_released("left"):
+		anim.stop()
+		sprite.frame = 7
+	
+	if Input.is_action_pressed("right"):
+		anim.play("walk_right")
+	if Input.is_action_just_released("right"):
+		anim.stop()
+		sprite.frame = 9
 
 	var axis = get_input_axis()
 	if axis == Vector2.ZERO:
@@ -39,11 +64,6 @@ func _physics_process(delta):
 		apply_movement(axis * acceleration * delta)
 		
 	motion = move_and_slide(motion)
-	
-	if Input.is_action_just_pressed("left"):
-		sprite.flip_h = true
-	if Input.is_action_just_pressed("right"):
-		sprite.flip_h = false
 		
 	if Input.is_action_just_pressed("sprint"):
 		max_speed = 200
@@ -78,27 +98,31 @@ func handle_interaction():
 			hotbar_itemdata = json_data.item_data[player_inv.hotbar[player_inv.active_item_slot][0]]
 		if hotbar_itemdata.has("tileid"):
 			if hotbar_itemdata["type"] == "wall":
-				place_tile(hotbar_itemdata, walltilemap)
+				place_tile(hotbar_itemdata, walltilemap, "wtiles")
 			elif hotbar_itemdata["type"] == "prop":
-				place_tile(hotbar_itemdata, proptilemap)
+				place_tile(hotbar_itemdata, proptilemap, "ptiles")
 				
 	var hpos = walltilemap.map_to_world(tilepos) + Vector2(8, 8)
 	highlight.position = hpos
 	highlight_wall.position = hpos
 
 func break_tile(tilemap, assign, tile_to_item):
+	var item_key
+	for key in tile_to_item:
+		if key == tilemap.get_cellv(tilepos):
+			item_key = key
 	var item_drop = item_drop_obj.instance()
 	item_drop.position = tilepos * Vector2(16, 16) + Vector2(8, 8)
-	item_drop.set("item_name", tile_to_item[tilemap.get_cellv(tilepos)])
-	item_drop.name = tile_to_item[tilemap.get_cellv(tilepos)]
+	item_drop.set("item_name", tile_to_item[item_key])
+	item_drop.name = tile_to_item[item_key]
 	tilemap.set_cellv(tilepos, -1)
 	save_chunk(current_chunk.x, current_chunk.y, tilepos, assign, -1)
 	y_sort.add_child(item_drop)
 	
-func place_tile(itemdata, tilemap):
+func place_tile(itemdata, tilemap, assign):
 	if walltilemap.get_cellv(tilepos) == -1 and proptilemap.get_cellv(tilepos) == -1:
 		tilemap.set_cellv(tilepos, itemdata["tileid"])
-		save_chunk(current_chunk.x, current_chunk.y, tilepos, "wtiles", itemdata["tileid"])
+		save_chunk(current_chunk.x, current_chunk.y, tilepos, assign, itemdata["tileid"])
 		var slot = get_tree().root.get_node("/root/world/ui/hotbar/hotbar_inv/hotbar_slot_" + str(player_inv.active_item_slot + 1))
 		slot.use_item()
 

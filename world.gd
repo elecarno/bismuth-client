@@ -35,64 +35,11 @@ var props = {}
 
 var open_simplex_noise = OpenSimplexNoise.new()
 
-var floortiles = {"water": 0, "mud": 1, "volcanic": 2, "sand": 3, "rich": 4, "bismuth": 5,
-"temperate": 6, "coal": 7, "metallic": 8, "gold": 9, "icy": 10, "radioactive": 11,
-"mineral": 12, "crystal": 13}
-
-var walltiles = {"air": -1, "rock": 0, "granite": 1, "iron_ore": 2}
-var biome_wall_data = { # [main, secondary, ore 1, ore 2, etc]
-	"water": ["air"],
-	"mud": ["air"],
-	"volcanic": ["air"],
-	"sandy": ["air"],
-	"temperate": ["rock", "granite", "iron_ore"],
-	"icy": ["air"],
-	"rich": ["air"],
-	"bismuth": ["air"],
-	"crystal": ["air"],
-	"coal": ["air"],
-	"metallic": ["air"],
-	"gold": ["air"],
-	"radioactive": ["air"],
-	"mineral": ["air"],
-}
-
-var objecttiles = {"vine_eye": preload("res://objects/vine_eye.tscn")}
-var biome_object_data = {
-	"water": {},
-	"mud": {},
-	"volcanic": {},
-	"sandy": {},
-	"temperate": {},
-	"icy": {},
-	"rich": {"vine_eye": 0.01},
-	"bismuth": {},
-	"crystal": {},
-	"coal": {},
-	"metallic": {},
-	"gold": {},
-	"radioactive": {},
-	"mineral": {},
-}
-
-var proptiles = {"red_shroom": 0, "yellow_shroom": 1, "stalagmite": 2, "cave_grass": 3, 
-"glow_bell": 4}
-var biome_prop_data = {
-	"water": {},
-	"mud": {},
-	"volcanic": {"stalagmite": 0.05},
-	"sandy": {},
-	"temperate": {"stalagmite": 0.05},
-	"icy": {},
-	"rich": {"red_shroom": 0.025, "yellow_shroom": 0.015, "cave_grass": 0.03, "glow_bell": 0.022},
-	"bismuth": {},
-	"crystal": {},
-	"coal": {},
-	"metallic": {},
-	"gold": {},
-	"radioactive": {},
-	"mineral": {},
-}
+onready var floortiles = json_data.gen_data["floortiles"]
+onready var walltiles = json_data.gen_data["walltiles"]
+onready var proptiles = json_data.gen_data["proptiles"]
+onready var biome_wall_data = json_data.gen_data["biome_wall_data"]
+onready var biome_prop_data = json_data.gen_data["biome_prop_data"]
 
 func generate_map(per, oct, seed_arr):
 	if seed_arr == 0:
@@ -144,7 +91,6 @@ func generate_chunk(chunk_x, chunk_y):
 		"ftiles": [],
 		"ptiles": [],
 		"wtiles": [],
-		"objects": []
 	}
 	
 	for x in chunk_width:
@@ -254,29 +200,9 @@ func generate_chunk(chunk_x, chunk_y):
 					running_total = running_total + biomefoldata[i]
 					if rand <= running_total and proptilemap.get_cell(pos.x, pos.y) == -1 and walltilemap.get_cell(pos.x, pos.y) == -1:
 						proptilemap.set_cellv(pos, proptiles[i])
-						
-			var object = {}
-			if fol < 0.7:
-				var biomeobjdata = biome_object_data[biome[pos]]
-				rng.randomize()
-				var rand = rand_range(0, 1)
-				var running_total = 0
-				var i = get_random(biomeobjdata)
-				if i != "0":
-					running_total = running_total + biomeobjdata[i]
-					if rand <= running_total:
-						proptilemap.set_cellv(pos, -1)
-						var instance = objecttiles[i].instance()
-						instance.position = proptilemap.map_to_world(pos) + Vector2(8, 8)
-						#y_sort.get_node(str(chunk_x) + ", " + str(chunk_y)).add_child(instance)
-						instance.set("chunk_pos", Vector2(chunk_x, chunk_y))
-						y_sort.add_child(instance)
-						object = {"pos": pos, "type": i}
 					
 			chunk["ftiles"].append(floortilemap.get_cell(pos.x, pos.y))
 			chunk["wtiles"].append(walltilemap.get_cell(pos.x, pos.y))
-			if object.size() != 0:
-				chunk["objects"].append(object)
 	
 	for x in chunk_width:
 		for y in chunk_height:
@@ -311,15 +237,6 @@ func load_chunk(chunk_x, chunk_y):
 		if map[i]["x"] == chunk_x and map[i]["y"] == chunk_y:
 			chunk_to_load = map[i]
 			loaded.append(Vector2(chunk_x, chunk_y))
-		
-	for i in range(0, len(chunk_to_load["objects"])):
-		var pos = chunk_to_load["objects"][i]["pos"]
-		var type = chunk_to_load["objects"][i]["type"]
-		var instance = objecttiles[type].instance()
-		instance.position = proptilemap.map_to_world(pos) + Vector2(8, 8)
-		#y_sort.get_node(str(chunk_x) + ", " + str(chunk_y)).add_child(instance)
-		instance.set("chunk_pos", Vector2(chunk_x, chunk_y))
-		y_sort.add_child(instance)
 	
 	var pos_array = []
 	for x in chunk_width:

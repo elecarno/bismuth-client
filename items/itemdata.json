@@ -2,7 +2,9 @@
     "iron_ore": {
         "type": "resource",
         "stacksize": 999,
-        "description": "ore that can be smelted into iron bars in a blast furnace"
+        "description": "ore that can be smelted into iron bars in a blast furnace",
+        "harvesttype": "wall",
+        "harvestid": 2
     },
     "iron_pickaxe": {
         "type": "tool",
@@ -53,8 +55,9 @@
         "tileid": 4
     },
     "torch": {
-        "type": "object",
+        "type": "prop",
         "stacksize": 999,
-        "description": "burning fuel on a stick to light the way!"
+        "description": "burning fuel on a stick to light the way!",
+        "tileid": 5
     }
 }
