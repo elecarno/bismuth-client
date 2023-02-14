@@ -7,7 +7,13 @@
         "harvestid": 2
     },
     "iron_pickaxe": {
-        "type": "tool",
+        "type": "walltool",
+        "stacksize": 1,
+        "description": "I wonder where this idea came from",
+        "strength": 10
+    },
+    "iron_sickle": {
+        "type": "proptool",
         "stacksize": 1,
         "description": "I wonder where this idea came from",
         "strength": 10
@@ -23,6 +29,18 @@
         "stacksize": 999,
         "description": "a chunk of pure granite, found in many biomes",
         "tileid": 1
+    },
+    "vinewall": {
+        "type": "wall",
+        "stacksize": 999,
+        "description": "a solid slab of vines hardened over the centuries",
+        "tileid": 3
+    },
+    "rich_granite_wall": {
+        "type": "wall",
+        "stacksize": 999,
+        "description": "a solid slab of vines hardened over the centuries, mixed with the granite of temperate caves",
+        "tileid": 4
     },
     "red_shroom": {
         "type": "prop",

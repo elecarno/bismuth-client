@@ -20,7 +20,8 @@ var active_item_slot = 0
 
 var hotbar = {
 	0: ["iron_pickaxe", 1], # slot_index: [item_name, item_quantity]
-	1: ["rock_wall", 16],
+	1: ["iron_sickle", 1],
+	2: ["rock_wall", 16],
 }
 
 func add_item(item_name, item_quantity):

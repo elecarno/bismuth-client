@@ -86,16 +86,22 @@ func handle_interaction():
 		highlight.visible = true
 		highlight_wall.visible = false
 		
+	var hotbar_itemdata = {}
+	if player_inv.hotbar.has(player_inv.active_item_slot):
+		hotbar_itemdata = json_data.item_data[player_inv.hotbar[player_inv.active_item_slot][0]]
+		
+	# breaking tiles
 	if Input.is_action_pressed("lmb"):
-		if walltilemap.get_cellv(tilepos) != -1:
-			break_tile(walltilemap, "wtiles", json_data.wtile_to_item)
-		if proptilemap.get_cellv(tilepos) != -1:
-			break_tile(proptilemap, "ptiles", json_data.ptile_to_item)
+		if hotbar_itemdata.has("type"):
+			if walltilemap.get_cellv(tilepos) != -1:
+				if hotbar_itemdata["type"] == "walltool":
+					break_tile(walltilemap, "wtiles", json_data.wtile_to_item)
+			if proptilemap.get_cellv(tilepos) != -1:
+				if hotbar_itemdata["type"] == "proptool":
+					break_tile(proptilemap, "ptiles", json_data.ptile_to_item)
 
+	# placing tiles
 	if Input.is_action_pressed("rmb"):
-		var hotbar_itemdata = {}
-		if player_inv.hotbar.has(player_inv.active_item_slot):
-			hotbar_itemdata = json_data.item_data[player_inv.hotbar[player_inv.active_item_slot][0]]
 		if hotbar_itemdata.has("tileid"):
 			if hotbar_itemdata["type"] == "wall":
 				place_tile(hotbar_itemdata, walltilemap, "wtiles")

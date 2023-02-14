@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tilemap/wall_tileset.tres" type="TileSet" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://effects/tile_highlight_wall.png" type="Texture" id=8]
 [ext_resource path="res://inventory/inventory.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ui/ui.gd" type="Script" id=10]
-[ext_resource path="res://inventory/item_drop.tscn" type="PackedScene" id=11]
 [ext_resource path="res://inventory/hotbar.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ui/rainyhearts.ttf" type="DynamicFontData" id=13]
 
@@ -55,27 +54,6 @@ offset = Vector2( 0, -16 )
 
 [node name="y_sort" type="YSort" parent="."]
 
-[node name="item_drop" parent="y_sort" instance=ExtResource( 11 )]
-position = Vector2( 4124, 4091 )
-
-[node name="item_drop2" parent="y_sort" instance=ExtResource( 11 )]
-position = Vector2( 4120, 4070 )
-
-[node name="item_drop3" parent="y_sort" instance=ExtResource( 11 )]
-position = Vector2( 4139, 4075 )
-
-[node name="item_drop4" parent="y_sort" instance=ExtResource( 11 )]
-position = Vector2( 4097, 4062 )
-
-[node name="item_drop5" parent="y_sort" instance=ExtResource( 11 )]
-position = Vector2( 4123, 4050 )
-
-[node name="item_drop6" parent="y_sort" instance=ExtResource( 11 )]
-position = Vector2( 4142, 4058 )
-
-[node name="item_drop7" parent="y_sort" instance=ExtResource( 11 )]
-position = Vector2( 4104, 4053 )
-
 [node name="prop_tiles" type="TileMap" parent="y_sort"]
 tile_set = ExtResource( 6 )
 cell_size = Vector2( 16, 16 )
@@ -84,7 +62,7 @@ collision_layer = 3
 format = 1
 
 [node name="player" parent="y_sort" instance=ExtResource( 1 )]
-position = Vector2( 4096, 4096 )
+position = Vector2( 4096, 4238 )
 collision_layer = 15
 
 [node name="wide" type="Camera2D" parent="y_sort/player"]
